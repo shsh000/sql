@@ -1,10 +1,10 @@
 set serveroutput on;
-/* »ç¿øÅ×ÀÌºí¿¡¼­ »ç¿ø¹øÈ£, »ç¿øÀÌ¸§, ÀÎ»óµÈ±Ş¿©, ºÎ¼­ÀÌ¸§ Ãâ·Â
-´Ü, ÀÔ»óµÈ ±Ş¿©´Â ¾÷ºÎ(job_id)º°·Î
+/* ì‚¬ì›í…Œì´ë¸”ì—ì„œ ì‚¬ì›ë²ˆí˜¸, ì‚¬ì›ì´ë¦„, ì¸ìƒëœê¸‰ì—¬, ë¶€ì„œì´ë¦„ ì¶œë ¥
+ë‹¨, ì¸ìƒëœ ê¸‰ì—¬ëŠ” ì—…ë¶€(job_id)ë³„ë¡œ
 it_prog => 10%
 st_clerk => 20%
 st_man => 30%
-Å¸¾÷¹«´Â ÀÎ»ó X */
+íƒ€ì—…ë¬´ëŠ” ì¸ìƒ X */
 DECLARE
 v_empno employees.employee_id%TYPE;
 v_ename employees.last_name%TYPE;
@@ -26,16 +26,16 @@ v_jobid employees.job_id%TYPE;
     v_salin := v_sal*1.3;
     else v_salin := v_sal;
     end if;
-    DBMS_OUTPUT.PUT_LINE('»ç¿ø¹øÈ£ : ' || v_empno || ', ' || '»ç¿øÀÌ¸§ : ' || v_ename || ', ' || 'ÀÎ»óµÈ ±Ş¿© : ' || v_salin || ', ' || '¼Ò¼ÓºÎ¼­ : ' || v_dname);
+    DBMS_OUTPUT.PUT_LINE('ì‚¬ì›ë²ˆí˜¸ : ' || v_empno || ', ' || 'ì‚¬ì›ì´ë¦„ : ' || v_ename || ', ' || 'ì¸ìƒëœ ê¸‰ì—¬ : ' || v_salin || ', ' || 'ì†Œì†ë¶€ì„œ : ' || v_dname);
 end;
 /
 
 select * from employees;
 select department_id from departments;
 
-/* ºÎ¼­¹øÈ£¸¦ ÀÔ·Â(Ä¡È¯º¯¼ö »ç¿ë)ÇÒ °æ¿ì
-ÀÔ·ÂµÈ ºÎ¼­¿¡¼­ Á¦ÀÏ ³ôÀº ±Ş¿©¸¦ ¹Ş´Â »ç¿øÀÇ
-»ç¿ø¹øÈ£, »ç¿øÀÌ¸§, ±Ş¿©, ºÎ¼­ÀÌ¸§ Ãâ·Â */
+/* ë¶€ì„œë²ˆí˜¸ë¥¼ ì…ë ¥(ì¹˜í™˜ë³€ìˆ˜ ì‚¬ìš©)í•  ê²½ìš°
+ì…ë ¥ëœ ë¶€ì„œì—ì„œ ì œì¼ ë†’ì€ ê¸‰ì—¬ë¥¼ ë°›ëŠ” ì‚¬ì›ì˜
+ì‚¬ì›ë²ˆí˜¸, ì‚¬ì›ì´ë¦„, ê¸‰ì—¬, ë¶€ì„œì´ë¦„ ì¶œë ¥ */
 DECLARE
 v_empno employees.employee_id%TYPE;
 v_ename employees.last_name%TYPE;
@@ -50,11 +50,11 @@ v_dname departments.department_name%TYPE;
                     from employees
                     where department_id = &id
                     group by department_id);
-    DBMS_OUTPUT.PUT_LINE('»ç¿ø¹øÈ£ : ' || v_empno || ', ' || '»ç¿øÀÌ¸§ : ' || v_ename || ', ' || '±Ş¿© : ' || v_sal || ', ' || '¼Ò¼ÓºÎ¼­ : ' || v_dname);
+    DBMS_OUTPUT.PUT_LINE('ì‚¬ì›ë²ˆí˜¸ : ' || v_empno || ', ' || 'ì‚¬ì›ì´ë¦„ : ' || v_ename || ', ' || 'ê¸‰ì—¬ : ' || v_sal || ', ' || 'ì†Œì†ë¶€ì„œ : ' || v_dname);
 end;
 /
 
---±âº» LOOP ¿¹Á¦
+--ê¸°ë³¸ LOOP ì˜ˆì œ
 DECLARE
     v_countryid locations.country_id%TYPE := 'CA';
     v_loc_id locations.location_id%TYPE;
@@ -76,7 +76,7 @@ END;
 
 select * from locations;
 
---WHILE LOOP(Á¶°ÇÀ» ±âÁØÀ¸·Î ¹İº¹) ¿¹Á¦
+--WHILE LOOP(ì¡°ê±´ì„ ê¸°ì¤€ìœ¼ë¡œ ë°˜ë³µ) ì˜ˆì œ
 DECLARE
     v_countryid locations.country_id%TYPE := 'CA';
     v_loc_id locations.location_id%TYPE;
@@ -87,7 +87,7 @@ BEGIN
     INTO v_loc_id
     from locations
     where country_id = v_countryid;
-    --3¹ø ¹İº¹ÇÏ´Â Á¶°Ç
+    --3ë²ˆ ë°˜ë³µí•˜ëŠ” ì¡°ê±´
     WHILE v_counter <= 3 LOOP
         insert into locations(location_id, city, country_id)
         values((v_loc_id + v_counter), v_new_city, v_countryid);
@@ -96,7 +96,7 @@ BEGIN
 END;
 /
 
---FOR LOOP(È½¼ö¸¦ ±âÁØÀ¸·Î ¹İº¹) ¿¹Á¦
+--FOR LOOP(íšŸìˆ˜ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ë°˜ë³µ) ì˜ˆì œ
 DECLARE
     v_countryid locations.country_id%TYPE := 'CA';
     v_loc_id locations.location_id%TYPE;
@@ -106,7 +106,7 @@ BEGIN
     INTO v_loc_id
     from locations
     where country_id = v_countryid;
-    --i = ÀÓÀÇÀÇ º¯¼ö, 1~3±îÁö ¹İº¹
+    --i = ì„ì˜ì˜ ë³€ìˆ˜, 1~3ê¹Œì§€ ë°˜ë³µ
     FOR i IN 1..3 LOOP
         insert into locations(location_id, city, country_id)
         values((v_loc_id + i), v_new_city, v_countryid);
@@ -120,8 +120,8 @@ create table aaa
 create table bbb
 (b number(3));
 
-/* 1. aaa Å×ÀÌºí¿¡ 1ºÎÅÍ 10±îÁö ÀÔ·ÂµÇµµ·Ï PL/SQL ºí·ÏÀ» ÀÛ¼ºÇÏ½Ã¿À.
-´Ü, insert ¹®Àº 1¹ø¿¡ »ç¿ë */
+/* 1. aaa í…Œì´ë¸”ì— 1ë¶€í„° 10ê¹Œì§€ ì…ë ¥ë˜ë„ë¡ PL/SQL ë¸”ë¡ì„ ì‘ì„±í•˜ì‹œì˜¤.
+ë‹¨, insert ë¬¸ì€ 1ë²ˆì— ì‚¬ìš© */
 DECLARE
 v_a aaa.a%TYPE := 0;
 BEGIN
@@ -131,7 +131,7 @@ BEGIN
 END;
 /
 
-/* 2. bbb Å×ÀÌºí¿¡ 1ºÎÅÍ 10±îÁö ÃÖÁ¾ ÇÕ°è °ªÀ» PL/SQL ºí·ÏÀ¸·Î ÀÛ¼ºÇÏ¿© ÀÔ·ÂÇÏ½Ã¿À. */
+/* 2. bbb í…Œì´ë¸”ì— 1ë¶€í„° 10ê¹Œì§€ ìµœì¢… í•©ê³„ ê°’ì„ PL/SQL ë¸”ë¡ìœ¼ë¡œ ì‘ì„±í•˜ì—¬ ì…ë ¥í•˜ì‹œì˜¤. */
 DECLARE
 v_b bbb.b%TYPE := 0;
 BEGIN
@@ -139,12 +139,12 @@ BEGIN
         v_b := v_b + i;
         insert into bbb values(v_b);
     END LOOP;
-    DBMS_OUTPUT.PUT_LINE('1~10 ÇÕ°è : ' || v_b);
+    DBMS_OUTPUT.PUT_LINE('1~10 í•©ê³„ : ' || v_b);
 END;
 /
 
-/* 3. aaa Å×ÀÌºí¿¡ 1ºÎÅÍ 10±îÁö Â¦¼ö¸¸ ÀÔ·ÂµÇµµ·Ï PL/SQL ºí·ÏÀ» ÀÛ¼ºÇÏ½Ã¿À.
-´Ü, insert ¹®Àº ÇÑ¹ø »ç¿ë, if¹® »ç¿ë */
+/* 3. aaa í…Œì´ë¸”ì— 1ë¶€í„° 10ê¹Œì§€ ì§ìˆ˜ë§Œ ì…ë ¥ë˜ë„ë¡ PL/SQL ë¸”ë¡ì„ ì‘ì„±í•˜ì‹œì˜¤.
+ë‹¨, insert ë¬¸ì€ í•œë²ˆ ì‚¬ìš©, ifë¬¸ ì‚¬ìš© */
 DECLARE
 i number(10);
 BEGIN
@@ -156,8 +156,8 @@ BEGIN
 END;
 /
 
-/* 4. bbb Å×ÀÌºí¿¡ 1ºÎÅÍ 10±îÁö Â¦¼ö ÃÖÁ¾ ÇÕ°è °ªÀ» PL/SQL ºí·ÏÀ¸·Î ÀÛ¼ºÇÏ¿© ÀÔ·ÂÇÏ½Ã¿À.
-´Ü, if¹® »ç¿ë */
+/* 4. bbb í…Œì´ë¸”ì— 1ë¶€í„° 10ê¹Œì§€ ì§ìˆ˜ ìµœì¢… í•©ê³„ ê°’ì„ PL/SQL ë¸”ë¡ìœ¼ë¡œ ì‘ì„±í•˜ì—¬ ì…ë ¥í•˜ì‹œì˜¤.
+ë‹¨, ifë¬¸ ì‚¬ìš© */
 DECLARE
 v_b bbb.b%TYPE := 0;
 i number(10);
@@ -173,8 +173,8 @@ BEGIN
 END;
 /
 
-/* 5. 1ºÎÅÍ 10±îÁö¿¡¼­ Â¦¼öÀÇ ÇÕ°è´Â aaa Å×ÀÌºí¿¡, È¦¼öÀÇ ÇÕ°è´Â bbb Å×ÀÌºí¿¡ 
-ÀÔ·ÂµÇµµ·Ï PL/SQL ºí·ÏÀ» ÀÛ¼ºÇÏ½Ã¿À. (´Ü, if ¹® »ç¿ë) */
+/* 5. 1ë¶€í„° 10ê¹Œì§€ì—ì„œ ì§ìˆ˜ì˜ í•©ê³„ëŠ” aaa í…Œì´ë¸”ì—, í™€ìˆ˜ì˜ í•©ê³„ëŠ” bbb í…Œì´ë¸”ì— 
+ì…ë ¥ë˜ë„ë¡ PL/SQL ë¸”ë¡ì„ ì‘ì„±í•˜ì‹œì˜¤. (ë‹¨, if ë¬¸ ì‚¬ìš©) */
 DECLARE
 v_a aaa.a%TYPE := 0;
 v_b bbb.b%TYPE := 0;
@@ -215,7 +215,7 @@ BEGIN
     into v_myrec.v_rec1
     from employees
     where employee_id = 100;
-    --µ¥ÀÌÅÍ Å¸ÀÔ µ¿ÀÏÇÏ°Ô ÇÏ´Â°É ±ÇÀå(to_char ¾²´Â ÀÌÀ¯)
+    --ë°ì´í„° íƒ€ì… ë™ì¼í•˜ê²Œ í•˜ëŠ”ê±¸ ê¶Œì¥(to_char ì“°ëŠ” ì´ìœ )
     DBMS_OUTPUT.PUT_LINE(v_myrec.v_rec1.last_name || ', ' ||
     to_char(v_myrec.v_hire_date) || ', ' || to_char(v_myrec.v_sal));
 END;
@@ -248,9 +248,9 @@ END;
 
 select * from retired_emps;
 
-/* »ç¿ø¹øÈ£¸¦ ÀÔ·Â(Ä¡È¯º¯¼ö& »ç¿ë)ÇÒ °æ¿ì
-ºÎ¼­º°·Î ±¸ºĞÇÏ¿© °¢°¢ÀÇ Å×ÀÌºí¿¡ ÀÔ·ÂÇÏ´Â PL/SQL ºí·ÏÀ» ÀÛ¼ºÇÏ½Ã¿À.
-´Ü, ÇØ´ç ºÎ¼­°¡ ¾ø´Â »ç¿øÀº emp00 Å×ÀÌºí¿¡ ÀÔ·ÂÇÏ½Ã¿À. */
+/* ì‚¬ì›ë²ˆí˜¸ë¥¼ ì…ë ¥(ì¹˜í™˜ë³€ìˆ˜& ì‚¬ìš©)í•  ê²½ìš°
+ë¶€ì„œë³„ë¡œ êµ¬ë¶„í•˜ì—¬ ê°ê°ì˜ í…Œì´ë¸”ì— ì…ë ¥í•˜ëŠ” PL/SQL ë¸”ë¡ì„ ì‘ì„±í•˜ì‹œì˜¤.
+ë‹¨, í•´ë‹¹ ë¶€ì„œê°€ ì—†ëŠ” ì‚¬ì›ì€ emp00 í…Œì´ë¸”ì— ì…ë ¥í•˜ì‹œì˜¤. */
 DECLARE
     v_emp_rec employees%ROWTYPE;
 BEGIN
@@ -324,8 +324,8 @@ BEGIN
 END;
 /
 
-/* Ä¡È¯º¯¼ö(&)¸¦ »ç¿ëÇÏ¸é ¼ıÀÚ¸¦ ÀÔ·ÂÇÏ¸é ÇØ´ç ±¸±¸´ÜÀÌ Ãâ·ÂµÇµµ·Ï ÇÏ½Ã¿À.
-¿¹) 2 ÀÔ·Â½Ã
+/* ì¹˜í™˜ë³€ìˆ˜(&)ë¥¼ ì‚¬ìš©í•˜ë©´ ìˆ«ìë¥¼ ì…ë ¥í•˜ë©´ í•´ë‹¹ êµ¬êµ¬ë‹¨ì´ ì¶œë ¥ë˜ë„ë¡ í•˜ì‹œì˜¤.
+ì˜ˆ) 2 ì…ë ¥ì‹œ
 2 * 1 = 2
 2 * 2 = 4
 2 * 3 = 6
@@ -344,7 +344,7 @@ BEGIN
 END;
 /
 
-/* ±¸±¸´Ü 2~9´Ü±îÁö Ãâ·ÂµÇµµ·Ï ÇÏ½Ã¿À. */
+/* êµ¬êµ¬ë‹¨ 2~9ë‹¨ê¹Œì§€ ì¶œë ¥ë˜ë„ë¡ í•˜ì‹œì˜¤. */
 BEGIN
     for v_no IN 2..9 LOOP
         for i IN 1..9 LOOP
@@ -354,8 +354,8 @@ BEGIN
 END;
 /
 
-/* ±¸±¸´Ü 1~9´Ü±îÁö Ãâ·ÂµÇµµ·Ï ÇÏ½Ã¿À.
-   (´Ü, È¦¼ö´Ü Ãâ·Â) */
+/* êµ¬êµ¬ë‹¨ 1~9ë‹¨ê¹Œì§€ ì¶œë ¥ë˜ë„ë¡ í•˜ì‹œì˜¤.
+   (ë‹¨, í™€ìˆ˜ë‹¨ ì¶œë ¥) */
 BEGIN
     for v_no IN 1..9 LOOP
         for i IN 1..9 LOOP
